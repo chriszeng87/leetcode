@@ -1,53 +1,46 @@
 /**
- * Given a sorted array, remove the duplicates in place such that each element appear only once and 
- * return the new length. Do not allocate extra space for another array, you must do this in place 
- * with constant memory.
+ * Given a sorted array, remove the duplicates in place such that each element appear only once and return
+ *  the new length.
 
-* For example, given input array A = [1,1,2], your function should return length = 2, and A is now [1,2].
+ * Do not allocate extra space for another array, you must do this in place with constant memory.
+
+ * For example,
+ * Given input array A = [1,1,2],
+
+ * Your function should return length = 2, and A is now [1,2].
  * 
  * @author Chris
  *
  */
 public class RemoveDuplicatesFromSortedArray {
 	
-	static int removeDuplicates(int[] array) {
-		if (array == null || array.length == 0) {
-			return 0;
-		}
-		int dupSum = 0;
-		int j = 0;
-		for (int i = 1; i < array.length; i++) {
-			if(array[i] == array[i - 1]) {
-				dupSum++;
-				continue;
-			} else {
-				j++;
-				array[j] = array[i];
-			}
-		}
-		
-		for (int i = 0; i < array.length - dupSum; i++) {
-			System.out.print(array[i] + "  ");
-		}
-		
-		return array.length - dupSum;
-	}
+    public int removeDuplicates(int[] A) {
+        if (A == null || A.length == 0) {
+            return 0;
+        } else if (A.length == 1) {
+            return 1;
+        }
+        
+        int curNum = A[0];
+        int curIndex = 1;
+        int duplicate = 0;
+        for(int i = 1; i < A.length; i++) {
+            if(A[i] == curNum) {
+                duplicate++;
+                continue;
+            } else {
+                A[curIndex++] = A[i];
+                curNum = A[i];
+            }
+        }        
+        return A.length - duplicate;       
+    }
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int[] arr = {1, 2, 2, 3};
-		System.out.println("newlen = " + removeDuplicates(arr) + "\n");
-		
-		int[] arr2 = {1, 2, 2, 3, 3};
-		System.out.println("newlen = " + removeDuplicates(arr2) + "\n");
-		
-		int[] arr3 = {1, 2, 3, 4};
-		System.out.println("newlen = " + removeDuplicates(arr3) + "\n");
-		
-		int[] arr4 = {1, 2, 2, 2};
-		System.out.println("newlen = " + removeDuplicates(arr4) + "\n");
+		// TODO Auto-generated method stub
 
 	}
 
