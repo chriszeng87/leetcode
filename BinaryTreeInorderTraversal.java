@@ -1,0 +1,64 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+/**
+ * Given a binary tree, return the inorder traversal of its nodes' values.
+
+For example:
+Given binary tree {1,#,2,3},
+   1
+    \
+     2
+    /
+   3
+return [1,3,2].
+
+Note: Recursive solution is trivial, could you do it iteratively?
+
+confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+
+ * @author Chris
+ *
+ */
+public class BinaryTreeInorderTraversal {
+	
+    public List<Integer> inorderTraversal(TreeNode root) {
+    	List<Integer> lists = new ArrayList<Integer>();
+    	if(root == null) {
+    		return lists;
+    	}
+    	Stack<TreeNode> stack = new Stack<TreeNode>();
+    	TreeNode p = root;
+ 
+        while(!stack.empty() || p != null){
+ 
+            // if it is not null, push to stack
+            //and go down the tree to left
+            if(p != null){
+                stack.push(p);
+                p = p.left;
+ 
+            // if no left child
+            // pop stack, process the node
+            // then let p point to the right
+            }else{
+                TreeNode t = stack.pop();
+                lists.add(t.val);
+                p = t.right;
+            }
+        }
+        
+        return lists;
+ 
+    }
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
