@@ -40,8 +40,16 @@ public class BSTIterator {
             }
             return curNode.val;
         } else if(!parentList.isEmpty()) {
-                curNode = parentList.pop();
-                return curNode.val;
+        		while(!parentList.isEmpty()) {
+        			TreeNode p = parentList.pop();
+        			if(curNode == p.left) {
+        				curNode = p;
+        				return curNode.val;
+        			} else {
+        				curNode = p;
+        			}
+        		}
+                return Integer.MAX_VALUE;
         } else {
             return Integer.MAX_VALUE;
         }
@@ -51,7 +59,14 @@ public class BSTIterator {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		TreeNode root = new TreeNode(1);
+		TreeNode right = new TreeNode(2);
+		root.right = right;
+		
+		  BSTIterator i = new BSTIterator(root);
+		  while (i.hasNext()) {
+			  System.out.println(i.next());
+		  }
 
 	}
 
