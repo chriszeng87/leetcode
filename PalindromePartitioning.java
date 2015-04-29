@@ -99,6 +99,7 @@ public class PalindromePartitioning {
             if(isPalidrome(temp)) {
                 tempList.add(temp);
                 partition(s.substring(i), result, tempList);
+                //in case of duplicate?
                 tempList.remove(tempList.size() - 1);
             }
             
