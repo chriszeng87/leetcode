@@ -1,58 +1,35 @@
 import java.util.Stack;
 
 
-//----------WRONG!!
 public class BSTIterator {
 	
-    private TreeNode curNode;
-    private Stack<TreeNode> parentList;
+    private Stack<TreeNode> stack;
 
     public BSTIterator(TreeNode root) {
-        curNode = root;
-        parentList = new Stack<TreeNode>();
+        TreeNode curNode = root;
+        stack = new Stack<TreeNode>();
+        while(curNode != null) {
+            stack.push(curNode);
+            curNode = curNode.left;
+        }
     }
 
     /** @return whether we have a next smallest number */
     public boolean hasNext() {
-        if (curNode == null) {
-            return false;
-        }
-        if(curNode.right != null || !parentList.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
-        
+        return !stack.isEmpty();
     }
 
     /** @return the next smallest number */
     public int next() {
-        if(curNode == null) {
-            return Integer.MAX_VALUE;
-        }
-        if(curNode.right != null) {
-            parentList.push(curNode);
-            curNode = curNode.right;
-            
-            while(curNode.left != null) {
-                parentList.push(curNode);
+        TreeNode nextNode = stack.pop();
+        if(nextNode.right != null) {
+            TreeNode curNode = nextNode.right;
+            while(curNode != null) {
+                stack.push(curNode);
                 curNode = curNode.left;
             }
-            return curNode.val;
-        } else if(!parentList.isEmpty()) {
-        		while(!parentList.isEmpty()) {
-        			TreeNode p = parentList.pop();
-        			if(curNode == p.left) {
-        				curNode = p;
-        				return curNode.val;
-        			} else {
-        				curNode = p;
-        			}
-        		}
-                return Integer.MAX_VALUE;
-        } else {
-            return Integer.MAX_VALUE;
         }
+        return nextNode.val;
     }
 
 	/**

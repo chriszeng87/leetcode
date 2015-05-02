@@ -61,6 +61,26 @@ public class JumpGame {
 	 
 	    return false;    
 	}
+	
+	//solution 2
+    public static boolean canJump2(int[] A) {
+ 		if (A == null || A.length == 0) {
+			return false;
+		}
+		
+		int farthest = A[0];
+		for (int i = 1; i < A.length; i++) {
+		    if(farthest < i) {
+		        return false;
+		    } else {
+		        farthest = Math.max(farthest, i + A[i]);
+		    }
+		}
+		
+        return true;   
+    }
+	
+	
 
 	/**
 	 * @param args
@@ -68,19 +88,27 @@ public class JumpGame {
 	public static void main(String[] args) {
 		int[] arr = {2,3,1,1,4};
 		System.out.println("--------- " + isReachable(arr));
-		System.out.println("--------- " + canJump(arr));		
+		System.out.println("--------- " + canJump(arr));	
+		System.out.println("--------- " + canJump2(arr));	
+		System.out.println();
 		
 		int[] arr2 = {3,2,1,0,4};
 		System.out.println("--------- " + isReachable(arr2));
 		System.out.println("--------- " + canJump(arr2));
+		System.out.println("--------- " + canJump2(arr2));
+		System.out.println();
 		
 		int[] arr3 = {1,3,0,1,2,1,2,0,4};
 		System.out.println("--------- " + isReachable(arr3));
-		System.out.println("--------- " + canJump(arr3));		
+		System.out.println("--------- " + canJump(arr3));
+		System.out.println("--------- " + canJump2(arr3));
+		System.out.println();
 		
 		int[] arr4 = {2,3,0,2,0,2};
 		System.out.println("--------- " + isReachable(arr4));
 		System.out.println("--------- " + canJump(arr4));
+		System.out.println("--------- " + canJump2(arr4));
+		System.out.println();
 
 	}
 	
