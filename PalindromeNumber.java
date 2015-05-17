@@ -1,5 +1,4 @@
 /**
- * 
  * Determine whether an integer is a palindrome. Do this without extra space.
  * 
  * click to show spoilers.
@@ -15,33 +14,33 @@
  * 
  * There is a more generic way of solving this problem.
  * 
- * @author chriszeng
+ * @author Chris
  * 
  */
 public class PalindromeNumber {
 	
-    public static boolean isPalindrome(int x) {
+    public boolean isPalindrome(int x) {
         if (x < 0) {
             return false;
         }
         
-        int factor = 1;
-        int temp = x;
-        while (temp / 10 != 0) {
-            factor = factor * 10;
-            temp = temp / 10;
+        int pow = 1;
+        int val = x;
+        int high = 0, low = 0;
+        while (val / 10 != 0) {
+            pow = pow * 10;
+            val = val / 10;
+            high++;
         }
         
-        temp = x;
-        while (factor != 1 && factor != 0) {
-            int left = temp / factor;
-            int right = temp % 10;
-            if (left != right) {
+        while (low < high) {
+            if (x / pow != x % 10) {
                 return false;
             }
-            
-            temp = (temp - left * factor) / 10;
-            factor = factor / 100;
+            x = (x - (x / pow) * pow) / 10;
+            pow = pow / 100;
+            low++;
+            high--;
         }
         
         return true;
@@ -53,11 +52,7 @@ public class PalindromeNumber {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("---------------isPalindrome = " + isPalindrome(23432));
-		System.out.println("---------------isPalindrome = " + isPalindrome(2332));
-		System.out.println("---------------isPalindrome = " + isPalindrome(2));
-		
-		System.out.println("---------------isPalindrome = " + isPalindrome(21));
+
 	}
 
 }
