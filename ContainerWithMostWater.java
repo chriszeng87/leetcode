@@ -1,5 +1,3 @@
-import java.util.List;
-
 /**
  * Given n non-negative integers a1, a2, ..., an, where each represents a point
  * at coordinate (i, ai). n vertical lines are drawn such that the two endpoints
@@ -13,6 +11,8 @@ import java.util.List;
  */
 public class ContainerWithMostWater {
 
+	// 直观的解释是：容积即面积，它受长和高的影响，当长度减小时候，
+	//高必须增长才有可能提升面积，所以我们从长度最长时开始递减，然后寻找更高的线来更新候补；
 	public int maxArea(int[] height) {
 		if (height == null || height.length < 2) {
 			return 0;
