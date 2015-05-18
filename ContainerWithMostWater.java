@@ -23,6 +23,7 @@ public class ContainerWithMostWater {
 		while (i < j) {
 			maxArea = Math.max((j - i) * Math.min(height[j], height[i]),
 					maxArea);
+			//较短的桶升高才可能提升面积
 			if (height[j] > height[i]) {
 				i++;
 			} else {
