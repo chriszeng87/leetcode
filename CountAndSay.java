@@ -73,6 +73,28 @@ public class CountAndSay {
 
         return oldString;
     }
+    
+    public String countAndSay3(int n) {
+    	String oldString = "1";
+    	while(--n > 0) {
+    	    StringBuilder sb = new StringBuilder();
+    	    char[] array = oldString.toCharArray();
+    	    char lastChar = array[0];
+    	    int lastCount = 1;
+    	    for (int i = 1; i < array.length; i++) {
+    	        if(array[i] == lastChar) {
+    	            lastCount++;
+    	        } else {
+    	            sb.append(lastCount).append(lastChar);
+    	            lastChar = array[i];
+    	            lastCount = 1;
+    	        }
+    	    }
+    	    sb.append(lastCount).append(lastChar);
+    	    oldString = sb.toString();
+    	}
+    	return oldString.toString();
+    }
 
 	/**
 	 * @param args
