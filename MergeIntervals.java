@@ -1,47 +1,32 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Given a collection of intervals, merge all overlapping intervals.
-
-For example,
-Given [1,3],[2,6],[8,10],[15,18],
-return [1,6],[8,10],[15,18].
  * 
+ * For example, Given [1,3],[2,6],[8,10],[15,18], return [1,6],[8,10],[15,18].
  * 
  * @author Chris
- *
+ * 
  */
 
-class Interval  implements Comparable<Interval>{
-	private int start;
-	private int end;
-	public Interval() {
-		
-	}
-	
-	public Interval(int start, int end) {
-		this.start = start;
-		this.end = end;
-	}
-	
-	
-	
-	public void setStart(int start) {
-		this.start = start;
+/**
+ * Definition for an interval.
+ */
+class Interval {
+	int start;
+	int end;
+
+	Interval() {
+		start = 0;
+		end = 0;
 	}
 
-	public void setEnd(int end) {
-		this.end = end;
-	}
-
-	public int getStart() {
-		return start;
-	}
-
-	public int getEnd() {
-		return end;
+	Interval(int s, int e) {
+		start = s;
+		end = e;
 	}
 
 	@Override
@@ -49,55 +34,58 @@ class Interval  implements Comparable<Interval>{
 		return "Interval [start=" + start + ", end=" + end + "]";
 	}
 
-	@Override
-	public int compareTo(Interval o) {
-		return this.getStart() - o.getStart();
-	}
-		
 }
 
 public class MergeIntervals {
-	
-	static List<Interval> getMergeIntervals(List<Interval> intervals) {
-		if (intervals == null || intervals.size() == 0) {
-			return null;
+
+	public static List<Interval> merge(List<Interval> intervals) {
+		List<Interval> list = new ArrayList<Interval>();
+		if (intervals == null || intervals.size() <= 1) {
+			return intervals;
 		}
-		List<Interval> result = new ArrayList<Interval>();
-		
-		Collections.sort(intervals);
-		System.out.println(intervals);
-			
-		Interval toAdd = intervals.get(0);
+
+		Collections.sort(intervals, new Comparator<Interval>() {
+			@Override
+			public int compare(Interval interval1, Interval interval2) {
+				if (interval1.start == interval2.start) {
+					return 0;
+				} else if (interval1.start < interval2.start) {
+					return -1;
+				} else {
+					return 1;
+				}
+			}
+		});
+
+		Interval last = intervals.get(0);
 		for (int i = 1; i < intervals.size(); i++) {
-			if(intervals.get(i).getStart() > toAdd.getEnd()) {
-				result.add(toAdd);
-				toAdd = intervals.get(i);
+			if (last.end >= intervals.get(i).start) {
+					if(last.end <= intervals.get(i).end) {
+						last.end = intervals.get(i).end;
+					}
 			} else {
-				toAdd.setStart(toAdd.getStart());
-				int oldEnd = toAdd.getEnd();
-				toAdd.setEnd(Math.max(intervals.get(i).getEnd(), oldEnd));
+				Interval toAdd = new Interval(last.start, last.end);
+				list.add(toAdd);
+				last.start = intervals.get(i).start;
+				last.end = intervals.get(i).end;
 			}
 		}
-		
-		if (toAdd != null) {
-			result.add(toAdd);
-		}
-		
-		return result;
+		Interval toAdd = new Interval(last.start, last.end);
+		list.add(toAdd);
+
+		return list;
 	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 		List<Interval> intervals = new ArrayList<Interval>();
-		intervals.add(new Interval(1,3));
-		intervals.add(new Interval(8,10));
-		intervals.add(new Interval(15,18));
-		intervals.add(new Interval(2,6));
-		
-		System.out.println("result = " + getMergeIntervals(intervals));
-
+		intervals.add(new Interval(1, 4));
+		intervals.add(new Interval(2, 3));
+		List<Interval> ret = merge(intervals);
+		System.out.println("------ret = " + ret);
 	}
 
 }
