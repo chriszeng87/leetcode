@@ -8,31 +8,34 @@ Compute and return the square root of x.
 public class Sqrt {
 	
     public static int mySqrt(int x) {
-        if (x == 0 || x == 1) {
-            return x;
-        }
-        
-        int left = Math.min(x, 1);
-        int right = Math.max(x, 1);
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            int tmp = mid * mid;
-            if (tmp == x) {
-                return mid;
-            } else if (tmp > x) {
-                right = mid - 1;
-            } else {
-                left = mid + 1;
+        public int mySqrt(int x) {
+            if (x == 0 || x == 1) {
+                return x;
             }
-        }
-        
-        int tmp2 = left * left;
-        if (tmp2 == x) {
-            return left;
-        } else if (tmp2 > x) {
-            return left - 1;
-        } else {
-            return left;
+            
+            long left = Math.min(x, 1);
+            long right = Math.max(x, 1);
+            while (left < right) {
+                long mid = (left + right) >> 1;
+                long tmp = mid * mid;
+                if (tmp == x) {
+                    return (int)mid;
+                } else if (tmp > x) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+
+            // return (int)left;        
+            long tmp2 = left * left;
+            if (tmp2 == x) {
+                return (int)left;
+            } else if (tmp2 > x) {
+                return (int)left - 1;
+            } else {
+                return (int)left;
+            }
         }
     }
 
