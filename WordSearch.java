@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Given a 2D board and a word, find if the word exists in the grid.
@@ -35,8 +33,7 @@ class Pos {
 public class WordSearch {
 	
 
-		// set cannot distinguish same Pos ..... wrong solution
-	    public static boolean exist(char[][] board, String remainWord, Set<Pos> set, Pos cur) {
+	    public static boolean exist(char[][] board, String remainWord, boolean[][] visited, Pos cur) {
 	        int m = board.length, n = board[0].length;
 	        if (remainWord.equals("")) {
 	            return true;
@@ -44,39 +41,39 @@ public class WordSearch {
 	        
 	        char c = remainWord.charAt(0);
 	        Pos top = new Pos(cur.row - 1, cur.col);
-	        if(cur.row - 1 >= 0 && !set.contains(top) && board[cur.row - 1][cur.col] == c) {
-	            set.add(top);
-	            if ( exist(board, remainWord.substring(1), set, top) ) {
+	        if(cur.row - 1 >= 0 && !visited[cur.row - 1][cur.col] && board[cur.row - 1][cur.col] == c) {
+	        	visited[cur.row - 1][cur.col] = true;
+	            if ( exist(board, remainWord.substring(1), visited, top) ) {
 	                return true;
 	            }
-	            set.remove(top);
+	            visited[cur.row - 1][cur.col] = false;
 	        }
 	        
 	        Pos left = new Pos(cur.row, cur.col - 1);
-	        if(cur.col - 1 >= 0 && !set.contains(left) && board[cur.row][cur.col - 1] == c) {
-	            set.add(left);
-	            if ( exist(board, remainWord.substring(1), set, left) ) {
+	        if(cur.col - 1 >= 0 && !visited[cur.row][cur.col - 1] && board[cur.row][cur.col - 1] == c) {
+	        	visited[cur.row][cur.col - 1] = true;
+	            if ( exist(board, remainWord.substring(1), visited, left) ) {
 	                return true;
 	            }
-	            set.remove(left);
+	            visited[cur.row][cur.col - 1] = false;
 	        }
 	        
 	        Pos right = new Pos(cur.row, cur.col + 1);
-	        if(cur.col + 1 < n && !set.contains(right) && board[cur.row][cur.col + 1] == c) {
-	            set.add(right);
-	            if ( exist(board, remainWord.substring(1), set, right) ) {
+	        if(cur.col + 1 < n && !visited[cur.row][cur.col + 1] && board[cur.row][cur.col + 1] == c) {
+	        	visited[cur.row][cur.col + 1] = true;
+	            if ( exist(board, remainWord.substring(1), visited, right) ) {
 	                return true;
 	            }
-	            set.remove(right);
+	            visited[cur.row][cur.col + 1] = false;
 	        }
 	        
 	        Pos down = new Pos(cur.row + 1, cur.col);
-	        if(cur.row + 1 < m && !set.contains(down) && board[cur.row + 1][cur.col] == c) {
-	            set.add(down);
-	            if ( exist(board, remainWord.substring(1), set, down) ) {
+	        if(cur.row + 1 < m && !visited[cur.row + 1][cur.col] && board[cur.row + 1][cur.col] == c) {
+	            visited[cur.row + 1][cur.col] = true;
+	            if ( exist(board, remainWord.substring(1), visited, down) ) {
 	                return true;
 	            }
-	            set.remove(down);
+	            visited[cur.row + 1][cur.col] = false;
 	        }
 	        
 	        return false;
@@ -101,12 +98,14 @@ public class WordSearch {
 	            }
 	        }
 	        
+	        boolean[][] visit = new boolean[board.length][board[0].length];
+	        
 	        for (Pos start : startList) {
-	            Set<Pos> set = new HashSet<Pos>();
-	            set.add(start);
-	            if (exist(board, word.substring(1), set, start)) {
+	        	visit[start.row][start.col] = true;
+	            if (exist(board, word.substring(1), visit, start)) {
 	                return true;
 	            }
+	            visit[start.row][start.col] = false;
 	        }
 	        
 	        return false;
