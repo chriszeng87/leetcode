@@ -22,69 +22,50 @@ For now, the judge is able to judge based on one instance of gray code sequence.
  * @author Chris
  *
  */
-public class GrayCode {
-    
-    public static List<Integer> getGrayCode(String str, int k, List<Integer> path) {
-        List<Integer> list = new ArrayList<Integer>();
-        if (k == str.length()) {
-            if (Integer.parseInt(str, 2) == 0) {
-                list.add(0);
-                return list;
-            }  else {
-                return null;
-            }
+public class GrayCode {       
+        
+		//第n位的格雷码由两部分构成，一部分是n-1位格雷码，再加上 1<<(n-1)和n-1位格雷码的逆序的和
+        public static List<Integer> grayCode(int n) {
+            if(n==0) {  
+                List<Integer> result = new ArrayList<Integer>();  
+                result.add(0);  
+                return result;  
+            }  
+              
+            List<Integer> tmp = grayCode(n-1);  
+            int addNumber = 1 << (n-1);  
+            ArrayList<Integer> result = new ArrayList<Integer>(tmp);  
+            for(int i=tmp.size()-1;i>=0;i--) {  
+                result.add(addNumber + tmp.get(i));  
+            }  
+            return result; 
         }
         
-        int num = Integer.parseInt(str, 2);
-        if ( num == 0) {
-            list.add(0);
-            return list;
-        } 
-        
-        path.add(num);
-        
-        for (int j = k; j < str.length(); j++) {
-            StringBuilder str1 = new StringBuilder(str);
-	        if (str.charAt(j) == '0') {
-	            str1.replace(j, j + 1, "1");
-	        } else {
-	            str1.replace(j, j + 1, "0");
-	        }
-	        
-	        if (!path.contains(Integer.parseInt(str1.toString(), 2))) {
-	            list = getGrayCode(str1.toString(), j + 1, path);
-	            if (list != null) {
-	                list.add(Integer.parseInt(str.toString(), 2));
-	                return list;
-	            } else {
-	                continue;
-	            }
-	        } else {
-	        	continue;
-	        }
+        public static List<Integer> grayCode2(int n) {
+        	List<Integer> result = new ArrayList<Integer>();  
+            result.add(0);  
+            for(int i=0; i<n;i++){  
+                int highest = 1<<i;  
+                int len = result.size();  
+                for(int j=len -1; j>=0; j--){  
+                    result.add(highest + result.get(j));  
+                }  
+            }  
+            return result;  
         }
-        
-        return null;
-        
-    }
-    
-    
-    public static List<Integer> grayCode(int n) {
-        List<Integer> path = new ArrayList<Integer>();
-        String str = Integer.toBinaryString(n);
-        List<Integer> ret = getGrayCode(str.toString(), 0, path);
-        return ret;
-    }
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < 50; i++) {
-			List<Integer> ret = grayCode(i);
+//		for (int i = 0; i < 50; i++) {
+			List<Integer> ret = grayCode(2);
 			System.out.println(ret);
-		}
+//		}
+			
+		//  2   00 01 11 10
+		//	    00 10
 	}
 
 }
