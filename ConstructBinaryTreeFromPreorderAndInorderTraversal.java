@@ -2,10 +2,7 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
 
 	public static TreeNode buildTree(int[] preorder, int[] inorder, int preLeft,
 			int preRight, int inLeft, int inRight) {
-		if (preLeft < 0 || preLeft >= preorder.length
-				|| preRight >= preorder.length || inLeft < 0
-				|| inLeft >= preorder.length || inRight >= preorder.length
-				|| preLeft > preRight || inLeft > inRight) {
+		if (inLeft > inRight) {
 			return null;
 		}
 		int rootIndexInOrder = inLeft;
