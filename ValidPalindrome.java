@@ -1,62 +1,54 @@
-/**
- * Given a string, determine if it is a palindrome, considering only alphanumeric 
- * characters and ignoring cases.
 
- * For example, "Red rum, sir, is murder" is a palindrome, while "Programcreek is awesome" is not.
- * 
- * @author Chris
- *
- */
 public class ValidPalindrome {
 	
-	static boolean isPanlindrome(String s) {
-		if (s == null) {
-			return false;
-		}
-		
-		int i = 0;
-		int j = s.length() - 1;
-		while (i < j) {
-			if(s.charAt(i) != s.charAt(j)) {
-				return false;
-			}
-			i++;
-			j--;
-		}
-		
-		return true;
-	}
-	
-	static String getSmallString(String s) {
-		if (s == null) {
-			return null;
-		}
-		
-		s = s.toLowerCase();
-		StringBuilder result = new StringBuilder();
-		
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) - 'a' >= 0 && s.charAt(i) - 'z' <= 0) {
-				result.append(s.charAt(i));
-			}
-		}
-		return result.toString();
-	}
-	
-	static boolean isValidPalindrome(String str) {
-		String small = getSmallString(str);
-		return isPanlindrome(small);
-	}
+    public boolean isChar(char c) {
+        if ((c - 'a' >= 0 && c - 'z' <= 0)
+            || (c - 'A' >= 0 && c - 'Z' <= 0)
+            || (c - '0' >= 0 && c - '9' <= 0)) {
+            return true;        
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean charEquals(char a, char b) {
+        StringBuilder str1 = new StringBuilder();
+        str1.append(a);
+        StringBuilder str2 = new StringBuilder();
+        str2.append(b);
+        return str1.toString().toLowerCase().equals(str2.toString().toLowerCase());
+    }
+    
+    public boolean isPalindrome(String s) {
+        if(s == null || s.length() == 0) {
+            return true;
+        }
+        
+        int i = 0, j = s.length() - 1;
+        while (i < j) {
+            if (isChar(s.charAt(i)) && isChar(s.charAt(j))) {
+                if(!charEquals(s.charAt(i),s.charAt(j))) {
+                    return false;
+                } else {
+                    i++;
+                    j--;
+                }
+            } else if(!isChar(s.charAt(i))) {
+                i++;
+            } else {
+                j--;
+            }
+        }
+        
+        return true;
+    }
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(isValidPalindrome("Red rum, sir, is murder"));
-		System.out.println(isValidPalindrome("Programcreek is awesome"));		
-		System.out.println(isValidPalindrome("P"));	
-		System.out.println(isValidPalindrome("Pt"));	
+
 	}
 
 }
