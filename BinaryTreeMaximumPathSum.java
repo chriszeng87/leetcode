@@ -41,6 +41,28 @@ public class BinaryTreeMaximumPathSum {
 	        return Math.max(left + node.val, right + node.val);
 
 		}
+		
+		
+		//函数返回除了左根右这种方式之外的最大值，也就是只经过左子树或者只经过
+		//右子树的最大值
+	    public int getMaxPath(TreeNode root, int[] max) {
+	        if(root == null) {
+	            return 0;
+	        }
+	        
+	        int left = getMaxPath(root.left, max);
+	        int right = getMaxPath(root.right, max);
+	        int cur = Math.max(root.val, Math.max(root.val + left, root.val + right));
+	        max[0] = Math.max(Math.max(max[0], cur), left + right + root.val);
+	        return cur;
+	    }
+	 
+		public int maxPathSum2(TreeNode root) {
+	        int[] max = new int[1];
+	        max[0] = Integer.MIN_VALUE;
+	        getMaxPath(root, max);
+	        return max[0];
+		}
 
 	/**
 	 * @param args
