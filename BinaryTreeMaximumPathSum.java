@@ -44,7 +44,7 @@ public class BinaryTreeMaximumPathSum {
 		
 		
 		//函数返回除了左根右这种方式之外的最大值，也就是只经过左子树或者只经过
-		//右子树的最大值
+		//右子树的最大值，全局的最大值保存在max[0]中
 	    public int getMaxPath(TreeNode root, int[] max) {
 	        if(root == null) {
 	            return 0;
