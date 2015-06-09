@@ -45,6 +45,29 @@ public class WordBreak {
         
         return t[s.length()];
     }
+    
+    public boolean wordBreak2(String s, Set<String> wordDict) {
+        if (s == null || wordDict == null) {
+            return false;
+        }
+        
+        if (s.length() == 0 || wordDict.size() == 0) {
+            return false;
+        }
+        
+        boolean[] t = new boolean[s.length() + 1];
+        t[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (t[j] && wordDict.contains(s.substring(j,i))) {
+                    t[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return t[s.length()];
+    }
 
 	/**
 	 * @param args
