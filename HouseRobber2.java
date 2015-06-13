@@ -36,6 +36,26 @@ public class HouseRobber2 {
         return max;
         
     }
+    
+    public int rob2(int[] num) {
+        int len = num.length;
+        if(num == null || len == 0) {
+            return 0;
+        } else if (len == 1) {
+            return num[0];
+        }
+        
+        int[] maxArray = new int[len];
+        maxArray[0] = num[0];
+        maxArray[1] = Math.max(num[0], num[1]);
+        
+        for (int i = 2; i < len; i++) {
+            maxArray[i] = Math.max(maxArray[i - 1], maxArray[i - 2] + num[i]);
+        }
+        
+        return maxArray[len - 1];
+        
+    }
 
 	/**
 	 * @param args
