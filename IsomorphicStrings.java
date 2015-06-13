@@ -51,6 +51,37 @@ public class IsomorphicStrings {
         return true;
         
     }
+    
+    public boolean isIsomorphic2(String s, String t) {
+        if(s == null && t == null) {
+            return true;
+        } else if (s.length() == 0 && t.length() == 0) {
+            return true;
+        }
+        
+        Map<Character, Character> map = new HashMap<Character, Character>();
+        
+        int i = 0;
+        for (i = 0; i < s.length(); i++) {
+            if(!map.containsKey(s.charAt(i))) {
+                map.put(s.charAt(i), t.charAt(i));
+            } else if(map.get(s.charAt(i)) != t.charAt(i)) {
+                    return false;
+            }
+        }
+        
+        map.clear();
+        for (i = 0; i < s.length(); i++) {
+            if(!map.containsKey(t.charAt(i))) {
+                map.put(t.charAt(i), s.charAt(i));
+            } else if(map.get(t.charAt(i)) != s.charAt(i)) {
+                    return false;
+            }
+        }
+        
+        return true;
+        
+    }
 
 	/**
 	 * @param args
